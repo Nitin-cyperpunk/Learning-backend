@@ -3,6 +3,7 @@ const app = express();
 
 
 function isOldEnough(age) {
+   
     if ( age >=14) {
         return true;
     }else {
@@ -10,6 +11,17 @@ function isOldEnough(age) {
     }
 }
 
+function isOldEnoughMiddleware(req, res, next){
+     const age = req.query.age;
+    if ( age >=14) {
+        next();
+    } else {
+       res.status(411).json({
+        msg: "Sorry ur not elegible for ride "
+       })
+    }
+}
+app.use(isOldEnoughMiddleware);
 app.get("/ride2", function(req, res) {
     if (isOldEnough(req.query.age)) {
         res.json({
