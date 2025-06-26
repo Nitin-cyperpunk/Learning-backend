@@ -19,9 +19,11 @@ function sumHandler(req, res) {
         answer: a + b
     });
 }
-app.get("/sum", requestIncrease, sumHandler);
 
-    
+app.use(requestedIncrese)
+app.get("/sum", sumHandler);
+
+
  
 
 app.get("/multi/:a/:b", function(req, res)  {
