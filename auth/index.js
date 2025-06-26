@@ -41,11 +41,32 @@ app.post("/signin", (req, res) => {
         })
         console.log(users);
     } else {
-       res.status(401).send({ message: "Invalid username or password" })
-
+        res.status(403).send({
+            message: "Invalid username or password"
+        })
     }
 });
 
+app.get("/me", function (req, res) {
+    const token = req.headers.token;
+    let foundUser = null;
+
+    for ( let i =0; i < users.length; i++) {
+        if(users[i].token == token) {
+            foundUser = users[i];
+        }
+    }
+    if (foundUser) {
+        res.json({
+            username: foundUser.username,
+            password: foundUser.password
+        })
+    } else {
+        res.json({
+            message: "User not found"
+        })
+    }
+})
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
