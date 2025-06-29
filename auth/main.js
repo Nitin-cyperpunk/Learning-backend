@@ -1,10 +1,20 @@
 const express= require('express');
 const app = express();
+const path = require('path');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = "ItsNitinSIngh";
-const users = [];
+
 app.use(express.json());
-app.post("/signup", function(req, res){
+const users = [];
+function logger(req, res, next) {
+    console.log(req.method + " request come");
+    next();
+}
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.post("/signup", logger, function(req, res){
     const username = req.body.username;
     const password = req.body.password;
 
@@ -18,7 +28,7 @@ app.post("/signup", function(req, res){
 
 })
 
-app.post("/signin", function(req, res){
+app.post("/signin", logger, function(req, res){
     const username = req.body.username;
     const password = req.body.password;
     
@@ -37,6 +47,8 @@ app.post("/signin", function(req, res){
         const token = jwt.sign({
             username
         }, JWT_SECRET);
+        res.header("jwt", token);
+        res.header("random", Math.random());
         res.json({
             token: token
         })
@@ -44,13 +56,27 @@ app.post("/signin", function(req, res){
 
 })
 
-app.get("/me", function(req, res){
+function auth(req, res, next){
     const token = req.headers.token;
     const decodedData = jwt.verify(token, JWT_SECRET);
-    if(decodedData.username) {
-         let foundUser = null;
+    if (decodedData.username) {
+        req.username = decodedData.username;
+        next()
+
+    }else {
+        res.json({
+            mesg: "you are not logged in"
+        })
+    }
+
+}
+    
+app.get("/me", logger, auth, function(req, res){
+    
+    
+    let foundUser = null;
     for ( let i = 0; i < users.length; i++) {
-        if (users[i].username === decodedData.username){
+        if (users[i].username === req.username){
             foundUser = users[i];
         }
     }
@@ -58,7 +84,6 @@ app.get("/me", function(req, res){
         username: foundUser.username,
         password: foundUser.password   
     }) 
-    }
-})
+    })
 
 app.listen(3000);
