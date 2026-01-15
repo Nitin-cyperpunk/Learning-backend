@@ -1,10 +1,9 @@
 const express = require("express");
-
+const users = require("./MOCK_DATA.json");
 const fs = require("fs");
 const app = express()
 
 const PORT = 8000
-let users = JSON.parse(fs.readFileSync("./MOCK_DATA.json", "utf-8"));
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }))
@@ -35,16 +34,29 @@ app.route('/api/users/:id')
       const id = Number(req.params.id)
       const user = users.find((user) => user.id === id)
       return res.json(user)
-   // }).patch((req, res) => {
-   //    const id = Number(req.params.id)
-   //    let user = users.find((user) => user.id === id)
-   //    user = { ...user, ...req.body }
-   //    return res.json(user)
-   // }).delete((req, res) => {
-   //    const id = Number(req.params.id)
-   //    const filteredUsers = users.filter((user) => user.id !== id)
-   //    return res.json(filteredUsers)
-   })
+   }).patch((req, res) => {
+  const id = Number(req.params.id);
+  const index = users.findIndex(u => u.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  users[index] = { ...users[index], ...req.body };
+  res.json(users[index]);
+})
+
+.delete((req, res) => {
+  const id = Number(req.params.id);
+  const newUsers = users.filter(u => u.id !== id);
+
+  if (newUsers.length === users.length) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  users = newUsers;
+  res.json({ message: "User deleted successfully" });
+});
 
 app.post("/api/users", (req, res) => { 
    const body = req.body;
