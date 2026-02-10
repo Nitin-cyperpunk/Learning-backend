@@ -8998,56 +8998,5 @@
     "gender": "Female",
     "ip_address": "219.48.230.1",
     "city": "Fangzheng"
-  },
-  {
-    "first_name": "nitin ",
-    "last_name": "singh",
-    "email": "singhnitin7718@gmail.com ",
-    "gender": "male",
-    "city": "nashik",
-    "ip_address": "192.168.0.1"
-  },
-  {
-    "first_name": "nitin ",
-    "last_name": "singh",
-    "email": "singhnitin7718@gmail.com ",
-    "gender": "male",
-    "city": "nashik",
-    "ip_address": "192.168.0.1"
-  },
-  {
-    "first_name": "nitin ",
-    "last_name": "singh",
-    "email": "singhnitin7718@gmail.com ",
-    "gender": "male",
-    "city": "nashik",
-    "ip_address": "192.168.0.1"
-  },
-  {
-    "first_name": "nitin ",
-    "last_name": "singh",
-    "email": "singhnitin7718@gmail.com ",
-    "gender": "male",
-    "city": "nashik",
-    "ip_address": "192.168.0.1",
-    "id": 1006
-  },
-  {
-    "id": 1020,
-    "first_name": "Nitinkumar",
-    "last_name": "singh",
-    "email": "singhnitin7718@gmail.com ",
-    "gender": "male",
-    "city": "nashik",
-    "ip_address": "192.168.0.1"
-  },
-  {
-    "id": 1021,
-    "first_name": "nishant",
-    "last_name": "singh",
-    "email": "nishant9021899@gmail.com",
-    "gender": "male",
-    "city": "mumbai",
-    "ip_address": "192.168.0.156"
   }
 ]
